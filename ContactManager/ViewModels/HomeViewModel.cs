@@ -1,4 +1,6 @@
-﻿using ContactManager.Models;
+﻿using ContactManager.Commands;
+using ContactManager.Models;
+using ContactManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +20,16 @@ namespace ContactManager.ViewModels
         public ICommand ShowCallHistory { get; }
         public ICommand Delete { get; }
         public ICommand Call { get; }
+        public ICommand AddContact { get; }
 
-        public HomeViewModel(List<Contact> contacts)
+        public HomeViewModel(List<Contact> contacts, NavigationService addContactNavigationService)
         {
             _contacts = new ObservableCollection<ContactViewModel>();
 
-            foreach(Contact contact in contacts)
+
+            AddContact = new NavigateCommand(addContactNavigationService);
+
+            foreach (Contact contact in contacts)
             {
                 ContactViewModel contactViewModel = new ContactViewModel(contact);
                 _contacts.Add(contactViewModel);

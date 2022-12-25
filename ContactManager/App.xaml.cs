@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace ContactManager
 {
     /// <summary>
@@ -48,7 +49,12 @@ namespace ContactManager
 
         private HomeViewModel CreateHomeViewModel()
         {
-            return new HomeViewModel(_contactsBook.GetAllContacts());
+            return new HomeViewModel(_contactsBook.GetAllContacts(), new NavigationService(_navigationStore, CreateAddContactViewModel));
+        }
+
+        private AddContactViewModel CreateAddContactViewModel()
+        {
+            return new AddContactViewModel();
         }
     }
 }
