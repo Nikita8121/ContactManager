@@ -19,5 +19,19 @@ namespace ContactManager.ViewModels
         public ICommand Delete { get; }
         public ICommand Call { get; }
 
+        public HomeViewModel(List<User> users)
+        {
+            _users = new ObservableCollection<UserViewModel>();
+
+            foreach(User user in users)
+            {
+                UserViewModel userViewModel = new UserViewModel(user);
+                _users.Add(userViewModel);
+            }
+        }
+
+
+
+
     }
 }

@@ -35,10 +35,7 @@
 
 
         <Grid Grid.Row="2">
-            <ListView>
-                <ListViewItem />
-                <ListViewItem />
-                <ListViewItem />
+            <ListView ItemsSource="{Binding Users}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -49,14 +46,14 @@
                         <GridViewColumn Header="Name">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 20 0"  HorizontalAlignment="Center"  Text="fsdgdg"/>
+                                    <TextBlock Padding="0 0 20 0"  HorizontalAlignment="Center"  Text="{Binding Name}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="phone">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 20 0" Text="dfg"/>
+                                    <TextBlock Padding="0 0 20 0" Text="{Binding Email}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
 
@@ -64,7 +61,7 @@
                         <GridViewColumn Header="Email">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Padding="0 0 20 0" Text="fsdgdg"/>
+                                    <TextBlock Padding="0 0 20 0" Text="{Binding PhoneNumber}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

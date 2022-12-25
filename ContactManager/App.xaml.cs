@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ContactManager.Models;
+using ContactManager.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,23 @@ namespace ContactManager
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow = new MainWindow()
+            {
+                DataContext = CreateHomeViewModel()
+            };
+            MainWindow.Show();
+            base.OnStartup(e);
+        }
+
+        private HomeViewModel CreateHomeViewModel()
+        {
+            List<User> users = new List<User>();
+            users.Add(new User("gandon", "gandon", "gandon"));
+            users.Add(new User("gandon", "gandon", "gandon"));
+            users.Add(new User("gandon", "gandon", "gandon"));
+            return new HomeViewModel(users);
+        }
     }
 }
