@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Services.ContactsProvider
 {
-    public interface IContactsProvider
+    public class DataBaseContactProvider : IContactsProvider
     {
-        List<Contact> GetAllContacts();
+        public List<Contact> GetAllContacts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
