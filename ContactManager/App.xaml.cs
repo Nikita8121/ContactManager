@@ -54,7 +54,7 @@ namespace ContactManager
 
         private AddContactViewModel CreateAddContactViewModel()
         {
-            return new AddContactViewModel();
+            return new AddContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel));
         }
     }
 }
