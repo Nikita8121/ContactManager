@@ -1,4 +1,6 @@
 ﻿using ContactManager.Models;
+using ContactManager.Services;
+using ContactManager.Stores;
 using ContactManager.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +17,24 @@ namespace ContactManager
     /// </summary>
     public partial class App : Application
     {
+        private readonly NavigationStore _navigationStore;
+
+        public App()
+        {
+            string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            JsonService jsonService = new JsonService(homeDir);
+
+
+            _navigationStore = new NavigationStore();
+        }
         protected override void OnStartup(StartupEventArgs e)
         {
+
+            _navigationStore.CurrentViewModel = CreateHomeViewModel();
+
             MainWindow = new MainWindow()
             {
-                DataContext = CreateHomeViewModel()
+                DataContext = new MainViewModel(_navigationStore)
             };
             MainWindow.Show();
             base.OnStartup(e);
@@ -27,11 +42,11 @@ namespace ContactManager
 
         private HomeViewModel CreateHomeViewModel()
         {
-            List<User> users = new List<User>();
-            users.Add(new User("gandon", "gandon", "gandon"));
-            users.Add(new User("gandon", "gandon", "gandon"));
-            users.Add(new User("gandon", "gandon", "gandon"));
-            return new HomeViewModel(users);
+            List<Contact> contacts = new List<Contact>();
+            contacts.Add(new Contact("gandon", "gandon", "gandon"));
+            contacts.Add(new Contact("gandon", "gandon", "gandon"));
+            contacts.Add(new Contact("gandon", "gandon", "gandon"));
+            return new HomeViewModel(contacts);
         }
     }
 }

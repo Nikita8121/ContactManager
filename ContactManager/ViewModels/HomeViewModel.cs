@@ -11,22 +11,22 @@ namespace ContactManager.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<UserViewModel> _users;
-        public IEnumerable<UserViewModel> Users => _users;
+        private readonly ObservableCollection<ContactViewModel> _contacts;
+        public IEnumerable<ContactViewModel> Contacts => _contacts;
         public ICommand ImportContacts { get; }
         public ICommand DeleteContacts { get; }
         public ICommand ShowCallHistory { get; }
         public ICommand Delete { get; }
         public ICommand Call { get; }
 
-        public HomeViewModel(List<User> users)
+        public HomeViewModel(List<Contact> contacts)
         {
-            _users = new ObservableCollection<UserViewModel>();
+            _contacts = new ObservableCollection<ContactViewModel>();
 
-            foreach(User user in users)
+            foreach(Contact contact in contacts)
             {
-                UserViewModel userViewModel = new UserViewModel(user);
-                _users.Add(userViewModel);
+                ContactViewModel contactViewModel = new ContactViewModel(contact);
+                _contacts.Add(contactViewModel);
             }
         }
 

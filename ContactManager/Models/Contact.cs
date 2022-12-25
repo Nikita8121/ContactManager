@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ContactManager.Models
 {
-    public class User
+    public class Contact
     {
         public string Name { get; }
         public string Email { get; }
         public string PhoneNumber { get; }
         private List<Call> _callsHistory;
 
-        public User (string name, string email, string phoneNumber)
+        public Contact(string name, string email, string phoneNumber)
         {
             Name = name;
             Email = email;

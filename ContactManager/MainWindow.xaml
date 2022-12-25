@@ -4,11 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContactManager" xmlns:views="clr-namespace:ContactManager.Views"
+        xmlns:vms="clr-namespace:ContactManager.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid>
-            <views:HomeView  />
+        <Grid Margin="20 10" MaxWidth="600">
+            <Grid.Resources>
+                <DataTemplate  DataType="{x:Type vms:HomeViewModel}">
+                    <views:HomeView  />
+                </DataTemplate>
+            </Grid.Resources>
+
+            <ContentControl  Content="{Binding CurrentViewModel}"  />
         </Grid>
     </ScrollViewer>
 </Window>
