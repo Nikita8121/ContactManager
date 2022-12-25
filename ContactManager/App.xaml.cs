@@ -1,5 +1,6 @@
 ﻿using ContactManager.Models;
 using ContactManager.Services;
+using ContactManager.Services.ContactsProvider;
 using ContactManager.Stores;
 using ContactManager.ViewModels;
 using System;
@@ -18,11 +19,16 @@ namespace ContactManager
     public partial class App : Application
     {
         private readonly NavigationStore _navigationStore;
+        private readonly ContactsBook _contactsBook;
 
         public App()
         {
             string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            JsonService jsonService = new JsonService(homeDir);
+            JsonService jsonService = new JsonService($"{homeDir}/contactBook.json");
+
+            IContactsProvider contactsProvider = new DataBaseContactProvider(jsonService);
+
+            _contactsBook = new ContactsBook(contactsProvider);
 
 
             _navigationStore = new NavigationStore();
@@ -42,11 +48,7 @@ namespace ContactManager
 
         private HomeViewModel CreateHomeViewModel()
         {
-            List<Contact> contacts = new List<Contact>();
-            contacts.Add(new Contact("gandon", "gandon", "gandon"));
-            contacts.Add(new Contact("gandon", "gandon", "gandon"));
-            contacts.Add(new Contact("gandon", "gandon", "gandon"));
-            return new HomeViewModel(contacts);
+            return new HomeViewModel(_contactsBook.GetAllContacts());
         }
     }
 }

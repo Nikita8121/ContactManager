@@ -9,6 +9,6 @@ namespace ContactManager.Services.ContactsProvider
 {
     public interface IContactsProvider
     {
-        List<Contact> GetAllContacts();
+        public List<Contact> GetAllContacts();
     }
 }
