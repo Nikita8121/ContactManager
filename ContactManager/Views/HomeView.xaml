@@ -82,7 +82,7 @@
                         <GridViewColumn Header="">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Grid.Column="1"  Content="delete" />
+                                    <Button Grid.Column="1" Command="{Binding Delete}"  Content="delete" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

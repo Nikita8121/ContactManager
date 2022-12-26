@@ -16,6 +16,7 @@ namespace ContactManager.Models
         private readonly IContactsProvider _contactsProvider;
         private readonly IContactsCreator _contactsCreator;
         private readonly IContactsUpdater _contactsUpdater;
+        public event Action ContactsUpdated;
 
         public ContactsBook(IContactsProvider contactsProvider, IContactsCreator conctactsCreator, IContactsUpdater contactsUpdater)
         {
@@ -41,6 +42,20 @@ namespace ContactManager.Models
             Contact contact = _usersBook.Single(x => x.Name == name);
             contact.AddCall(new Call() { callDate = new DateTime() });
             _contactsUpdater.UpdateContacts(_usersBook);
+        }
+
+        public void DeleteContactByName(string name)
+        {
+            Contact contactToRemove = _usersBook.Single(x => x.Name == name);
+            _usersBook.Remove(contactToRemove);
+            _contactsUpdater.UpdateContacts(_usersBook);
+            OnContactsUpdated();
+        }
+
+
+        private void OnContactsUpdated()
+        {
+            ContactsUpdated?.Invoke();
         }
     }
 }

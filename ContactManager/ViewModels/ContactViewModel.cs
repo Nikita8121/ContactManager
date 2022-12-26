@@ -26,6 +26,7 @@ namespace ContactManager.ViewModels
             _contact = contact;
             _contactsBook = contactsBook;
             Call = new AddCallToHistoryCommand(_contact.Name, _contactsBook);
+            Delete = new RemoveContactCommand(_contact.Name, _contactsBook);
         }
     }
 }

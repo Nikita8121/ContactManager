@@ -28,11 +28,14 @@ namespace ContactManager.ViewModels
             AddContact = new NavigateCommand(addContactNavigationService);
 
             InitializeContacts(_contactsBook.GetAllContacts());
+
+            _contactsBook.ContactsUpdated += delegate () { InitializeContacts(_contactsBook.GetAllContacts()); };
         }
 
 
         private void InitializeContacts(List<Contact> contacts)
         {
+            _contacts.Clear();
             foreach (Contact contact in contacts)
             {
                 ContactViewModel contactViewModel = new ContactViewModel(contact, _contactsBook);
