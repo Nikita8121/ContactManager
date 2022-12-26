@@ -89,7 +89,7 @@
                         <GridViewColumn Header="">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Grid.Column="1"  Content="call" />
+                                    <Button Grid.Column="1" Command="{Binding Call}"  Content="call" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

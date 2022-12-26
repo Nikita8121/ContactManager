@@ -14,31 +14,31 @@ namespace ContactManager.ViewModels
     public class HomeViewModel : ViewModelBase
     {
         private readonly ObservableCollection<ContactViewModel> _contacts;
+        private readonly ContactsBook _contactsBook;
         public IEnumerable<ContactViewModel> Contacts => _contacts;
         public ICommand ImportContacts { get; }
-        public ICommand DeleteContacts { get; }
-        public ICommand ShowCallHistory { get; }
-        public ICommand Delete { get; }
-        public ICommand Call { get; }
         public ICommand AddContact { get; }
 
-        public HomeViewModel(List<Contact> contacts, NavigationService addContactNavigationService)
+        public HomeViewModel(ContactsBook contactsBook, NavigationService addContactNavigationService)
         {
             _contacts = new ObservableCollection<ContactViewModel>();
 
+            _contactsBook = contactsBook;
 
             AddContact = new NavigateCommand(addContactNavigationService);
 
-            Call = new AddCallToHistoryCommand();
-
-            foreach (Contact contact in contacts)
-            {
-                ContactViewModel contactViewModel = new ContactViewModel(contact);
-                _contacts.Add(contactViewModel);
-            }
+            InitializeContacts(_contactsBook.GetAllContacts());
         }
 
 
+        private void InitializeContacts(List<Contact> contacts)
+        {
+            foreach (Contact contact in contacts)
+            {
+                ContactViewModel contactViewModel = new ContactViewModel(contact, _contactsBook);
+                _contacts.Add(contactViewModel);
+            }
+        }
 
 
     }

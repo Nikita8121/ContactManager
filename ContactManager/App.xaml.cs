@@ -11,7 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-
+using ContactManager.Services.ContactsUpdater;
 
 namespace ContactManager
 {
@@ -30,8 +30,9 @@ namespace ContactManager
 
             IContactsProvider contactsProvider = new DataBaseContactProvider(jsonService);
             IContactsCreator contactsCreator = new DataBaseContactsCreator(jsonService);
+            IContactsUpdater contactsUpdater = new DataBaseContactsUpdater(jsonService);
 
-            _contactsBook = new ContactsBook(contactsProvider, contactsCreator);
+            _contactsBook = new ContactsBook(contactsProvider, contactsCreator, contactsUpdater);
 
 
             _navigationStore = new NavigationStore();
@@ -51,7 +52,7 @@ namespace ContactManager
 
         private HomeViewModel CreateHomeViewModel()
         {
-            return new HomeViewModel(_contactsBook.GetAllContacts(), new NavigationService(_navigationStore, CreateAddContactViewModel));
+            return new HomeViewModel(_contactsBook, new NavigationService(_navigationStore, CreateAddContactViewModel));
         }
 
         private AddContactViewModel CreateAddContactViewModel()

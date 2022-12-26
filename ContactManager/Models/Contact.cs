@@ -11,6 +11,7 @@ namespace ContactManager.Models
         public string Name { get; }
         public string Email { get; }
         public string PhoneNumber { get; }
+        public List<Call> CallHistory => _callsHistory;
         private List<Call> _callsHistory;
 
         public Contact(string name, string email, string phoneNumber)
