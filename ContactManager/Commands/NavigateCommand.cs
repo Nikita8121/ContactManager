@@ -18,7 +18,14 @@ namespace ContactManager.Commands
         }
         public override void Execute(object? parameter)
         {
-            _navigationService.Navigate(parameter);
+            if (parameter == null)
+            {
+                _navigationService.Navigate();
+            }
+            else
+            {
+                _navigationService.Navigate(parameter);
+            }
         }
     }
 }

@@ -20,7 +20,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Add contact" FontSize="24" Style="{StaticResource Header}"/>
+            <TextBlock Grid.Column="0"  x:Name="Title" Text="{Binding Title}" FontSize="24" Style="{StaticResource Header}"/>
         </Grid>
 
         <Grid Style="{StaticResource inputBlock}" Grid.Row="1">

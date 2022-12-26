@@ -67,8 +67,7 @@ namespace ContactManager
 
         private AddOrChangeContactViewModel CreateChangeContactViewModel(object param)
         {
-            Console.WriteLine(param);
-            return new AddOrChangeContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel));
+            return new AddOrChangeContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel), (string)param);
         }
     }
 }

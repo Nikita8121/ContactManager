@@ -15,6 +15,7 @@ namespace ContactManager.ViewModels
         private string _name;
         private string _email;
         private string _phoneNumber;
+        private string _title;
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
@@ -23,6 +24,27 @@ namespace ContactManager.ViewModels
         {
             SubmitCommand = new AddContactCommand(this, contactsBook, homeViewNavigationSevice);
             CancelCommand = new NavigateCommand(homeViewNavigationSevice);
+            Title = "Add contact";
+        }
+
+        public AddOrChangeContactViewModel(ContactsBook contactsBook, NavigationService homeViewNavigationSevice, string name)
+        {
+            Contact currentContact = contactsBook.GetContactByName(name);
+
+            Name = currentContact.Name;
+            Email = currentContact.Email;
+            PhoneNumber = currentContact.PhoneNumber;
+
+            SubmitCommand = new ChangeContactCommand(this, contactsBook, homeViewNavigationSevice, name);
+            CancelCommand = new NavigateCommand(homeViewNavigationSevice);
+
+            Title = "Change contact";
+        }
+
+        public string Title
+        {
+            get { return _title; }
+            set { _title = value; OnPropertyChanged(nameof(Title)); }
         }
 
 

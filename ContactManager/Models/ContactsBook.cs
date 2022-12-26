@@ -31,6 +31,11 @@ namespace ContactManager.Models
             return _usersBook;
         }
 
+        public Contact GetContactByName(string name)
+        {
+            return _usersBook.Single(x => x.Name == name);
+        }
+
         public void AddUserToBook(Contact contact)
         {
             
@@ -41,6 +46,15 @@ namespace ContactManager.Models
         {
             Contact contact = _usersBook.Single(x => x.Name == name);
             contact.AddCall(new Call() { callDate = new DateTime() });
+            _contactsUpdater.UpdateContacts(_usersBook);
+        }
+
+        public void UpdateContact(string name, Contact contact)
+        {
+            Contact contactToUpdate = _usersBook.Single(x => x.Name == name);
+            contactToUpdate.Name = contact.Name;
+            contactToUpdate.Email = contact.Email;
+            contactToUpdate.PhoneNumber = contact.PhoneNumber;
             _contactsUpdater.UpdateContacts(_usersBook);
         }
 

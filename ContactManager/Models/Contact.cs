@@ -8,9 +8,9 @@ namespace ContactManager.Models
 {
     public class Contact
     {
-        public string Name { get; }
-        public string Email { get; }
-        public string PhoneNumber { get; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public List<Call> CallHistory => _callsHistory;
         private List<Call> _callsHistory;
 
