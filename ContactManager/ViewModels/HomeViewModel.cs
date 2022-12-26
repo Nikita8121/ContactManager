@@ -29,6 +29,8 @@ namespace ContactManager.ViewModels
 
             AddContact = new NavigateCommand(addContactNavigationService);
 
+            Call = new AddCallToHistoryCommand();
+
             foreach (Contact contact in contacts)
             {
                 ContactViewModel contactViewModel = new ContactViewModel(contact);

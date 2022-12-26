@@ -1,6 +1,7 @@
 ﻿using ContactManager.Models;
 using ContactManager.Services;
 using ContactManager.Services.ContactsProvider;
+using ContactManager.Services.ContactsCreator;
 using ContactManager.Stores;
 using ContactManager.ViewModels;
 using System;
@@ -28,8 +29,9 @@ namespace ContactManager
             JsonService jsonService = new JsonService($"{homeDir}/contactBook.json");
 
             IContactsProvider contactsProvider = new DataBaseContactProvider(jsonService);
+            IContactsCreator contactsCreator = new DataBaseContactsCreator(jsonService);
 
-            _contactsBook = new ContactsBook(contactsProvider);
+            _contactsBook = new ContactsBook(contactsProvider, contactsCreator);
 
 
             _navigationStore = new NavigationStore();

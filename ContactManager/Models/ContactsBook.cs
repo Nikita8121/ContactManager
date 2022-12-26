@@ -1,4 +1,6 @@
-﻿using ContactManager.Services.ContactsProvider;
+﻿using ContactManager.DTOs;
+using ContactManager.Services.ContactsProvider;
+using ContactManager.Services.ContactsCreator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +17,12 @@ namespace ContactManager.Models
         public List<Contact> GetUsersBook() { return _usersBook; }
 
         private readonly IContactsProvider _contactsProvider;
+        private readonly IContactsCreator _contactsCreator;
 
-        public ContactsBook(IContactsProvider contactsProvider)
+        public ContactsBook(IContactsProvider contactsProvider, IContactsCreator conctactsCreator)
         {
             _contactsProvider = contactsProvider;
+            _contactsCreator = conctactsCreator;
         }
 
         public List<Contact> GetAllContacts()
@@ -26,9 +30,10 @@ namespace ContactManager.Models
             return _contactsProvider.GetAllContacts().ToList();
         }
 
-        public void AddUserToBook(Contact user)
+        public void AddUserToBook(Contact contact)
         {
-            _usersBook.Add(user);
+            
+            _contactsCreator.CreateContact(contact);
         }
     }
 }
