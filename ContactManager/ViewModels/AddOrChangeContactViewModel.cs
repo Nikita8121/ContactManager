@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace ContactManager.ViewModels
 {
-    public class AddContactViewModel : ViewModelBase
+    public class AddOrChangeContactViewModel : ViewModelBase
     {
         private string _name;
         private string _email;
@@ -19,7 +19,7 @@ namespace ContactManager.ViewModels
         public ICommand CancelCommand { get; }
 
 
-        public AddContactViewModel(ContactsBook contactsBook,NavigationService homeViewNavigationSevice)
+        public AddOrChangeContactViewModel(ContactsBook contactsBook,NavigationService homeViewNavigationSevice)
         {
             SubmitCommand = new AddContactCommand(this, contactsBook, homeViewNavigationSevice);
             CancelCommand = new NavigateCommand(homeViewNavigationSevice);

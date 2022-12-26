@@ -52,12 +52,23 @@ namespace ContactManager
 
         private HomeViewModel CreateHomeViewModel()
         {
-            return new HomeViewModel(_contactsBook, new NavigationService(_navigationStore, CreateAddContactViewModel));
+            Dictionary<string, NavigationService> dictionaryOfNavigationServices = new Dictionary<string, NavigationService>
+            {
+                {"CreateAddContactViewModel", new NavigationService(_navigationStore, CreateAddContactViewModel)},
+                {"CreateChangeContactViewModel", new NavigationService(_navigationStore, CreateChangeContactViewModel)}
+            };
+            return new HomeViewModel(_contactsBook, dictionaryOfNavigationServices);
         }
 
-        private AddContactViewModel CreateAddContactViewModel()
+        private AddOrChangeContactViewModel CreateAddContactViewModel()
         {
-            return new AddContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel));
+            return new AddOrChangeContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel));
+        }
+
+        private AddOrChangeContactViewModel CreateChangeContactViewModel(object param)
+        {
+            Console.WriteLine(param);
+            return new AddOrChangeContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel));
         }
     }
 }

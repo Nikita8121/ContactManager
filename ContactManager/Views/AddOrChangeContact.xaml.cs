@@ -18,9 +18,9 @@ namespace ContactManager.Views
     /// <summary>
     /// Interaction logic for AddContact.xaml
     /// </summary>
-    public partial class AddContact : UserControl
+    public partial class AddOrChangeContact : UserControl
     {
-        public AddContact()
+        public AddOrChangeContact()
         {
             InitializeComponent();
         }

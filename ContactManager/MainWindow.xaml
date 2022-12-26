@@ -13,8 +13,8 @@
                 <DataTemplate  DataType="{x:Type vms:HomeViewModel}">
                     <views:HomeView  />
                 </DataTemplate>
-                <DataTemplate  DataType="{x:Type vms:AddContactViewModel}">
-                    <views:AddContact  />
+                <DataTemplate  DataType="{x:Type vms:AddOrChangeContactViewModel}">
+                    <views:AddOrChangeContact  />
                 </DataTemplate>
             </Grid.Resources>
 

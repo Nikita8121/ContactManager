@@ -19,26 +19,26 @@ namespace ContactManager.ViewModels
         public ICommand ImportContacts { get; }
         public ICommand AddContact { get; }
 
-        public HomeViewModel(ContactsBook contactsBook, NavigationService addContactNavigationService)
+        public HomeViewModel(ContactsBook contactsBook, Dictionary<string, NavigationService> navigationServicesDictionary)
         {
             _contacts = new ObservableCollection<ContactViewModel>();
 
             _contactsBook = contactsBook;
 
-            AddContact = new NavigateCommand(addContactNavigationService);
+            AddContact = new NavigateCommand(navigationServicesDictionary["CreateAddContactViewModel"]);
 
-            InitializeContacts(_contactsBook.GetAllContacts());
+            InitializeContacts(_contactsBook.GetAllContacts(), navigationServicesDictionary);
 
-            _contactsBook.ContactsUpdated += delegate () { InitializeContacts(_contactsBook.GetAllContacts()); };
+            _contactsBook.ContactsUpdated += delegate () { InitializeContacts(_contactsBook.GetAllContacts(), navigationServicesDictionary); };
         }
 
 
-        private void InitializeContacts(List<Contact> contacts)
+        private void InitializeContacts(List<Contact> contacts, Dictionary<string, NavigationService> navigationServicesDictionary)
         {
             _contacts.Clear();
             foreach (Contact contact in contacts)
             {
-                ContactViewModel contactViewModel = new ContactViewModel(contact, _contactsBook);
+                ContactViewModel contactViewModel = new ContactViewModel(contact, _contactsBook, navigationServicesDictionary);
                 _contacts.Add(contactViewModel);
             }
         }

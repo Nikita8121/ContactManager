@@ -11,10 +11,10 @@ namespace ContactManager.Commands
 {
     public class AddContactCommand : CommandBase
     {
-        private readonly AddContactViewModel _addContactViewModel;
+        private readonly AddOrChangeContactViewModel _addContactViewModel;
         private readonly ContactsBook _contactsBook;
         private readonly NavigationService _homeViewNavigationSevice;
-        public AddContactCommand(AddContactViewModel addContactViewModel, ContactsBook contactsBook, NavigationService homeViewNavigationSevice)
+        public AddContactCommand(AddOrChangeContactViewModel addContactViewModel, ContactsBook contactsBook, NavigationService homeViewNavigationSevice)
         {
             _addContactViewModel = addContactViewModel;
             _contactsBook = contactsBook;

@@ -75,7 +75,7 @@
                         <GridViewColumn Header="">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Grid.Column="1"  Content="change contact" />
+                                    <Button Grid.Column="1" Command="{Binding ChangeContact}" CommandParameter="{Binding Name}" Content="change contact" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
