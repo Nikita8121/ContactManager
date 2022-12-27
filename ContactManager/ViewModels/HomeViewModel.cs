@@ -27,6 +27,8 @@ namespace ContactManager.ViewModels
 
             AddContact = new NavigateCommand(navigationServicesDictionary["CreateAddContactViewModel"]);
 
+            ImportContacts = new ImportContactsCommand(contactsBook);
+
             InitializeContacts(_contactsBook.GetAllContacts(), navigationServicesDictionary);
 
             _contactsBook.ContactsUpdated += delegate () { InitializeContacts(_contactsBook.GetAllContacts(), navigationServicesDictionary); };

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ContactManager.Services.ContactsUpdater;
+using ContactManager.Exceptions;
 
 namespace ContactManager.Models
 {
@@ -34,6 +35,41 @@ namespace ContactManager.Models
         public Contact GetContactByName(string name)
         {
             return _usersBook.Single(x => x.Name == name);
+        }
+
+        public void MergeContacts(string filePath)
+        {
+            List<Contact> contacts = _contactsProvider.GetContactsByPath(filePath);
+
+            bool isWrongJsonStructure = contacts.Any(x => x.Name == null || x.PhoneNumber == null);
+            if (isWrongJsonStructure)
+            {
+                throw new RequiredPropertiesNullException(filePath);
+            }
+
+            bool isContactsListConflicts = IsContactListsConflicts(_usersBook, contacts);
+            if(isContactsListConflicts)
+            {
+                throw new PropertiesInContactsListAreEqualException(filePath);
+            }
+
+            _usersBook = _usersBook.Concat(contacts).ToList();
+            _contactsUpdater.UpdateContacts(_usersBook);
+            OnContactsUpdated();
+        }
+
+        private bool IsContactListsConflicts(List<Contact> contactsList1, List<Contact> contactsList2)
+        {
+            return contactsList1.Any(contact1 =>
+            {
+                return contactsList2.Any(contact2 => IsContactsConflicts(contact1, contact2));
+            });
+        }
+        private bool IsContactsConflicts(Contact contact1, Contact contact2)
+        {
+            return contact1.Name == contact2.Name || 
+                contact1.PhoneNumber == contact2.PhoneNumber ||
+                (contact1.Email != null && contact2.Email != null) && (contact1.Email == contact2.Email);
         }
 
         public void AddUserToBook(Contact contact)

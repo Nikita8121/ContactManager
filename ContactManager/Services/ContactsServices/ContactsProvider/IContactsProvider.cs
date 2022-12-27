@@ -10,5 +10,6 @@ namespace ContactManager.Services.ContactsProvider
     public interface IContactsProvider
     {
         public List<Contact> GetAllContacts();
+        public List<Contact> GetContactsByPath(string filePath);
     }
 }

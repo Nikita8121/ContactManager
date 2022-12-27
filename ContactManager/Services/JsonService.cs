@@ -10,11 +10,18 @@ namespace ContactManager.Services
 {
     public class JsonService
     {
-        private readonly string _filePath;
+        private string _filePath;
 
         public JsonService(string filePath)
         {
             _filePath = filePath;
+        }
+
+
+        public string FilePath
+        {
+            get { return _filePath; }
+            set { _filePath = value; }
         }
 
         public T Get<T>()

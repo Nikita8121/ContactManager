@@ -2,7 +2,9 @@
 using ContactManager.Models;
 using ContactManager.Services;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +68,36 @@ namespace ContactManager.ViewModels
             set { _phoneNumber = value; OnPropertyChanged(nameof(PhoneNumber)); }
         }
 
+
+
+        private readonly Dictionary<string, List<string>> _propertyNameToErrorsDictionary;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public bool HasErrors => _propertyNameToErrorsDictionary.Any();
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, new List<string>());
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        }
+        private void ClearErrors(string propertyName)
+        {
+            _propertyNameToErrorsDictionary.Remove(propertyName);
+            OnErrorsChanged(propertyName);
+        }
+        private void AddError(string errorMessage, string propertyName)
+        {
+            if (!_propertyNameToErrorsDictionary.ContainsKey(propertyName))
+            {
+                _propertyNameToErrorsDictionary.Add(propertyName, new List<string>());
+            }
+
+            _propertyNameToErrorsDictionary[propertyName].Add(errorMessage);
+
+            OnErrorsChanged(propertyName);
+        }
 
 
     }

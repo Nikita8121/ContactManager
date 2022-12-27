@@ -22,6 +22,15 @@ namespace ContactManager.Services.ContactsProvider
             return contactDTOs.Select(r => ToContact(r)).ToList();
         }
 
+        public List<Contact> GetContactsByPath(string filePath)
+        {
+            string prevfilePath = _jsonService.FilePath;
+            _jsonService.FilePath = filePath;
+            List<ContactDTO> contactDTOs = _jsonService.Get<List<ContactDTO>>();
+            _jsonService.FilePath = prevfilePath;
+            return contactDTOs.Select(r => ToContact(r)).ToList();
+        }
+
         private Contact ToContact(ContactDTO contactDTO)
         {
             return new Contact(contactDTO.Name, contactDTO.Email, contactDTO.PhoneNumber);

@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Text="Main Window" FontSize="24" Style="{StaticResource Header}"/>
-            <Button Grid.Column="1"  Margin="10 0 0 0"  Content="Import contacts" />
+            <Button Grid.Column="1" Command="{Binding ImportContacts}"  Margin="10 0 0 0"  Content="Import contacts" />
         </Grid>
 
         <Grid Style="{StaticResource inputBlock}" Grid.Row="1">
@@ -50,7 +50,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="phone">
+                        <GridViewColumn Header="Email">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Padding="0 0 20 0" Text="{Binding Email}"/>
@@ -58,7 +58,7 @@
                             </GridViewColumn.CellTemplate>
 
                         </GridViewColumn>
-                        <GridViewColumn Header="Email">
+                        <GridViewColumn Header="Phone number">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Padding="0 0 20 0" Text="{Binding PhoneNumber}"/>
