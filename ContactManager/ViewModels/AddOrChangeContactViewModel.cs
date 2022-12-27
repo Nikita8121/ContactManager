@@ -27,6 +27,7 @@ namespace ContactManager.ViewModels
             SubmitCommand = new AddContactCommand(this, contactsBook, homeViewNavigationSevice);
             CancelCommand = new NavigateCommand(homeViewNavigationSevice);
             Title = "Add contact";
+            _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
         }
 
         public AddOrChangeContactViewModel(ContactsBook contactsBook, NavigationService homeViewNavigationSevice, string name)
@@ -41,6 +42,7 @@ namespace ContactManager.ViewModels
             CancelCommand = new NavigateCommand(homeViewNavigationSevice);
 
             Title = "Change contact";
+            _propertyNameToErrorsDictionary = new Dictionary<string, List<string>>();
         }
 
         public string Title
@@ -53,7 +55,7 @@ namespace ContactManager.ViewModels
         public string Name
         {
             get { return _name; }
-            set { _name = value; OnPropertyChanged(nameof(Name)); }
+            set { _name = value; OnPropertyChanged(nameof(Name)); AddError("The end date cannot be before the start date", nameof(Name)); }
         }
 
         public string Email
@@ -69,24 +71,17 @@ namespace ContactManager.ViewModels
         }
 
 
-
         private readonly Dictionary<string, List<string>> _propertyNameToErrorsDictionary;
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
         public bool HasErrors => _propertyNameToErrorsDictionary.Any();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
         public IEnumerable GetErrors(string propertyName)
         {
             return _propertyNameToErrorsDictionary.GetValueOrDefault(propertyName, new List<string>());
         }
 
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-        private void ClearErrors(string propertyName)
-        {
-            _propertyNameToErrorsDictionary.Remove(propertyName);
-            OnErrorsChanged(propertyName);
-        }
         private void AddError(string errorMessage, string propertyName)
         {
             if (!_propertyNameToErrorsDictionary.ContainsKey(propertyName))
@@ -97,6 +92,18 @@ namespace ContactManager.ViewModels
             _propertyNameToErrorsDictionary[propertyName].Add(errorMessage);
 
             OnErrorsChanged(propertyName);
+        }
+
+        private void ClearErrors(string propertyName)
+        {
+            _propertyNameToErrorsDictionary.Remove(propertyName);
+
+            OnErrorsChanged(propertyName);
+        }
+
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
 
