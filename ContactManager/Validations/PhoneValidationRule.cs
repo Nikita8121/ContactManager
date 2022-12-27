@@ -8,13 +8,13 @@ using System.Windows.Controls;
 
 namespace ContactManager.Validations
 {
-    public class NameValidationRule : ValidationRule
+    public class PhoneValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            string name = Convert.ToString(value).Trim();
+            string phone = Convert.ToString(value);
 
-            return name.Length > 2 ? ValidationResult.ValidResult : new ValidationResult(false, "Name length should consist from at least two characters");
+            return phone.IndexOf("_") < 0 ? ValidationResult.ValidResult : new ValidationResult(false, "Fill up your phone number");
         }
     }
 }
