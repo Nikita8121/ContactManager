@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ContactManager.Commands
 {
@@ -20,6 +21,7 @@ namespace ContactManager.Commands
         public override void Execute(object? parameter)
         {
             _contactsBook.AddCallToContactByName(_contactName);
+            MessageBox.Show("Call made");
         }
     }
 }

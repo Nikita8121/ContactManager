@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using ContactManager.Services.ContactsUpdater;
+using ContactManager.DTOs;
 
 namespace ContactManager
 {
@@ -27,6 +28,10 @@ namespace ContactManager
         {
             string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             JsonService jsonService = new JsonService($"{homeDir}/contactBook.json");
+            if(!jsonService.isFileExist())
+            {
+                jsonService.CreateFile(new List<ContactDTO>());
+            }
 
             IContactsProvider contactsProvider = new DataBaseContactProvider(jsonService);
             IContactsCreator contactsCreator = new DataBaseContactsCreator(jsonService);
@@ -55,7 +60,9 @@ namespace ContactManager
             Dictionary<string, NavigationService> dictionaryOfNavigationServices = new Dictionary<string, NavigationService>
             {
                 {"CreateAddContactViewModel", new NavigationService(_navigationStore, CreateAddContactViewModel)},
-                {"CreateChangeContactViewModel", new NavigationService(_navigationStore, CreateChangeContactViewModel)}
+                {"CreateChangeContactViewModel", new NavigationService(_navigationStore, CreateChangeContactViewModel)},
+                {"CreateCallHistoryViewModel",  new NavigationService(_navigationStore, CreateCallHistoryViewModel)}
+
             };
             return new HomeViewModel(_contactsBook, dictionaryOfNavigationServices);
         }
@@ -68,6 +75,11 @@ namespace ContactManager
         private AddOrChangeContactViewModel CreateChangeContactViewModel(object param)
         {
             return new AddOrChangeContactViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel), (string)param);
+        }
+
+        private CallHistoryViewModel CreateCallHistoryViewModel(object param)
+        {
+            return new CallHistoryViewModel(_contactsBook, new NavigationService(_navigationStore, CreateHomeViewModel), (string)param);
         }
     }
 }

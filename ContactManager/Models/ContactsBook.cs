@@ -37,6 +37,11 @@ namespace ContactManager.Models
             return _usersBook.Single(x => x.Name == name);
         }
 
+        public List<Call> GetContactsCallsByName(string name)
+        {
+            return _usersBook.Single(x => x.Name == name).CallHistory.ToList();
+        }
+
         public void MergeContacts(string filePath)
         {
             List<Contact> contacts = _contactsProvider.GetContactsByPath(filePath);
@@ -74,7 +79,11 @@ namespace ContactManager.Models
 
         public void AddUserToBook(Contact contact)
         {
-            
+            bool isContactExist = _usersBook.Any(c => c.Name == contact.Name || c.PhoneNumber == contact.PhoneNumber);
+            if(isContactExist)
+            {
+                throw new ContactExistException(contact.Name, contact.PhoneNumber);
+            }
             _contactsCreator.CreateContact(contact);
         }
 
@@ -88,9 +97,14 @@ namespace ContactManager.Models
         public void UpdateContact(string name, Contact contact)
         {
             Contact contactToUpdate = _usersBook.Single(x => x.Name == name);
+            bool isContactExist = _usersBook.Any(c => (c.Name == contact.Name || c.PhoneNumber == contact.PhoneNumber) && contactToUpdate != c);
+            if (isContactExist)
+            {
+                throw new ContactExistException(contact.Name, contact.PhoneNumber);
+            }
             contactToUpdate.Name = contact.Name;
-            contactToUpdate.Email = contact.Email;
             contactToUpdate.PhoneNumber = contact.PhoneNumber;
+            contactToUpdate.Email = contact.Email;
             _contactsUpdater.UpdateContacts(_usersBook);
         }
 

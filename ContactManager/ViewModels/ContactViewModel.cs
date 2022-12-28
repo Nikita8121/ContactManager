@@ -30,6 +30,7 @@ namespace ContactManager.ViewModels
             Call = new AddCallToHistoryCommand(_contact.Name, _contactsBook);
             Delete = new RemoveContactCommand(_contact.Name, _contactsBook);
             ChangeContact = new NavigateCommand(navigationServicesDictionary["CreateChangeContactViewModel"]);
+            ShowCallHistory = new NavigateCommand(navigationServicesDictionary["CreateCallHistoryViewModel"]);
         }
     }
 }

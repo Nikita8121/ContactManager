@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ContactManager.Commands
 {
@@ -20,8 +21,18 @@ namespace ContactManager.Commands
         }
         public override void Execute(object? parameter)
         {
-            _contactsBook.AddUserToBook(new Contact(_contactViewModel.Name, _contactViewModel.Email, _contactViewModel.PhoneNumber));
-            _homeViewNavigationSevice.Navigate();
+            try
+            {
+                _contactsBook.AddUserToBook(new Contact(_contactViewModel.Name, _contactViewModel.Email, _contactViewModel.PhoneNumber));
+                MessageBox.Show("Contact added");
+                _homeViewNavigationSevice.Navigate();
+            } catch (Exception ex)
+            {
+                string exceptionMessage = ex.Message;
+                MessageBox.Show(exceptionMessage);
+            }
+           
+                
         }
     }
 }

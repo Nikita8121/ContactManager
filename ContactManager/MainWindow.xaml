@@ -14,7 +14,10 @@
                     <views:HomeView  />
                 </DataTemplate>
                 <DataTemplate  DataType="{x:Type vms:AddOrChangeContactViewModel}">
-                    <views:AddOrChangeContact  />
+                    <views:AddOrChangeContactView  />
+                </DataTemplate>
+                <DataTemplate  DataType="{x:Type vms:CallHistoryViewModel}">
+                    <views:CallHistoryView  />
                 </DataTemplate>
             </Grid.Resources>
 

@@ -33,7 +33,7 @@ namespace ContactManager.Services.ContactsProvider
 
         private Contact ToContact(ContactDTO contactDTO)
         {
-            return new Contact(contactDTO.Name, contactDTO.Email, contactDTO.PhoneNumber);
+            return new Contact(contactDTO.Name, contactDTO.Email, contactDTO.PhoneNumber, contactDTO.CallHistory);
         }
     }
 }

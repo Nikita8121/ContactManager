@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="ContactManager.Views.CallHistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ContactManager.Views" xmlns:converters="clr-namespace:ContactManager.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="{Binding Title}" FontSize="24" Style="{StaticResource Header}"/>
+            <Button Grid.Column="1" Command="{Binding BackCommand}"  Margin="10 0 0 0"  Content="Return to main page" />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <TextBlock Text="Haven't called to that peron yet." Visibility="{Binding HasCalls, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+            <ListView ItemsSource="{Binding Calls}" Visibility="{Binding HasCalls, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      VerticalContentAlignment="Top"  
+                      MaxHeight="300"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      ScrollViewer.CanContentScroll="False">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Call date">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Padding="0 0 20 0"  HorizontalAlignment="Center"  Text="{Binding callDate}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+    </Grid>
+</UserControl>

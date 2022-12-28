@@ -15,6 +15,7 @@ namespace ContactManager.Services
         public JsonService(string filePath)
         {
             _filePath = filePath;
+
         }
 
 
@@ -22,6 +23,11 @@ namespace ContactManager.Services
         {
             get { return _filePath; }
             set { _filePath = value; }
+        }
+
+        public bool isFileExist()
+        {
+            return File.Exists(_filePath);
         }
 
         public T Get<T>()
@@ -39,6 +45,12 @@ namespace ContactManager.Services
         {
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(_filePath, json);
+        }
+
+        public void CreateFile<T>(T data)
+        {
+              var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+              File.WriteAllText(_filePath, json);
         }
     }
 }
