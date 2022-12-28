@@ -81,7 +81,7 @@ namespace ContactManager.Models
         public void AddCallToContactByName(string name)
         {
             Contact contact = _usersBook.Single(x => x.Name == name);
-            contact.AddCall(new Call() { callDate = new DateTime() });
+            contact.AddCall(new Call() { callDate = DateTime.Now });
             _contactsUpdater.UpdateContacts(_usersBook);
         }
 

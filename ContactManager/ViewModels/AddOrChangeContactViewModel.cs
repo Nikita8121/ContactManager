@@ -1,10 +1,12 @@
-﻿using ContactManager.Commands;
+﻿using ContactManager.Annotations;
+using ContactManager.Commands;
 using ContactManager.Models;
 using ContactManager.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,10 @@ namespace ContactManager.ViewModels
         private string _title;
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
+        public bool CanCreateContact => Contact.Validate(new Contact(_name, _email, _phoneNumber));
 
 
-        public AddOrChangeContactViewModel(ContactsBook contactsBook,NavigationService homeViewNavigationSevice)
+        public AddOrChangeContactViewModel(ContactsBook contactsBook, NavigationService homeViewNavigationSevice)
         {
             SubmitCommand = new AddContactCommand(this, contactsBook, homeViewNavigationSevice);
             CancelCommand = new NavigateCommand(homeViewNavigationSevice);
@@ -49,23 +52,49 @@ namespace ContactManager.ViewModels
             set { _title = value; OnPropertyChanged(nameof(Title)); }
         }
 
-
+        [Required(ErrorMessage = "Must not be empty.")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Must be at least 2 characters.")]
         public string Name
         {
             get { return _name; }
-            set { _name = value; OnPropertyChanged(nameof(Name)); }
+            set 
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+                ValidateProperty(value, "Name");
+            }
         }
-
+        [EmailAddress]
         public string Email
         {
             get { return _email; }
-            set { _email = value; OnPropertyChanged(nameof(Email)); }
+            set {
+                _email = value;
+                OnPropertyChanged(nameof(Email));
+                ValidateProperty(value, "Email");
+            }
         }
 
+        [Required(ErrorMessage = "Must not be empty.")]
+        [PhoneNumberCustom(ErrorMessage = "Fill up your phone number")]
         public string PhoneNumber
         {
             get { return _phoneNumber; }
-            set { _phoneNumber = value; OnPropertyChanged(nameof(PhoneNumber)); }
+            set {
+                _phoneNumber = value;
+                OnPropertyChanged(nameof(PhoneNumber));
+                ValidateProperty(value, "PhoneNumber");  
+            }
+        }
+
+
+
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
         }
 
     }
