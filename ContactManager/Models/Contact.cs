@@ -13,7 +13,7 @@ namespace ContactManager.Models
         [Required(ErrorMessage = "Must not be empty.")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Must be at least 2 characters.")]
         public string Name { get; set; }
-        [EmailAddress]
+        [EmailOptional]
         public string Email { get; set; }
         [Required(ErrorMessage = "Must not be empty.")]
         [PhoneNumberCustom(ErrorMessage = "Fill up your phone number")]

@@ -37,7 +37,7 @@ namespace ContactManager.ViewModels
             Contact currentContact = contactsBook.GetContactByName(name);
 
             Name = currentContact.Name;
-            Email = currentContact.Email;
+            Email = currentContact.Email ?? string.Empty;
             PhoneNumber = currentContact.PhoneNumber;
 
             SubmitCommand = new ChangeContactCommand(this, contactsBook, homeViewNavigationSevice, name);
@@ -64,7 +64,7 @@ namespace ContactManager.ViewModels
                 ValidateProperty(value, "Name");
             }
         }
-        [EmailAddress]
+        [EmailOptional]
         public string Email
         {
             get { return _email; }
@@ -91,6 +91,7 @@ namespace ContactManager.ViewModels
 
         private void ValidateProperty<T>(T value, string name)
         {
+            Console.WriteLine(value);
             Validator.ValidateProperty(value, new ValidationContext(this, null, null)
             {
                 MemberName = name
