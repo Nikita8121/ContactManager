@@ -12,7 +12,7 @@ namespace ContactManager.Annotations
     {
         public override bool IsValid(object value)
         {
-            string email = (value as string).Trim();
+            string email = (value as string)?.Trim();
             if (email == null || email == string.Empty) return true;
 
             if (!RegexEmailCheck(email)) return false;

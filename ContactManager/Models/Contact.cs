@@ -21,6 +21,13 @@ namespace ContactManager.Models
         public List<Call> CallHistory => _callsHistory;
         private List<Call> _callsHistory;
 
+
+        public Contact()
+        {
+            Name = String.Empty;
+            Email = String.Empty;
+            PhoneNumber = String.Empty;
+        }
         public Contact(string name, string email, string phoneNumber)
         {
             Name = name;

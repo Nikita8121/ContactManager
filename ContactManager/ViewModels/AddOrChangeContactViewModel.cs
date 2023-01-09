@@ -20,6 +20,7 @@ namespace ContactManager.ViewModels
         private string _email;
         private string _phoneNumber;
         private string _title;
+        private readonly Contact validationContext = new Contact();
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
         public bool CanCreateContact => Contact.Validate(new Contact(_name, _email, _phoneNumber));
@@ -51,9 +52,6 @@ namespace ContactManager.ViewModels
             get { return _title; }
             set { _title = value; OnPropertyChanged(nameof(Title)); }
         }
-
-        [Required(ErrorMessage = "Must not be empty.")]
-        [StringLength(50, MinimumLength = 2, ErrorMessage = "Must be at least 2 characters.")]
         public string Name
         {
             get { return _name; }
@@ -61,38 +59,36 @@ namespace ContactManager.ViewModels
             {
                 _name = value;
                 OnPropertyChanged(nameof(Name));
-                ValidateProperty(value, "Name");
+                ValidateProperty(validationContext, value, "Name");
             }
         }
-        [EmailOptional]
+
         public string Email
         {
             get { return _email; }
             set {
                 _email = value;
                 OnPropertyChanged(nameof(Email));
-                ValidateProperty(value, "Email");
+                ValidateProperty(validationContext, value, "Email");
             }
         }
 
-        [Required(ErrorMessage = "Must not be empty.")]
-        [PhoneNumberCustom(ErrorMessage = "Fill up your phone number")]
         public string PhoneNumber
         {
             get { return _phoneNumber; }
             set {
                 _phoneNumber = value;
                 OnPropertyChanged(nameof(PhoneNumber));
-                ValidateProperty(value, "PhoneNumber");  
+                ValidateProperty(validationContext, value, "PhoneNumber");  
             }
         }
 
 
 
-        private void ValidateProperty<T>(T value, string name)
+        private void ValidateProperty<T>(object Context, T value, string name)
         {
             Console.WriteLine(value);
-            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            Validator.ValidateProperty(value, new ValidationContext(Context, null, null)
             {
                 MemberName = name
             });
